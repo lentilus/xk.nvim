@@ -28,10 +28,8 @@ M.rm = function(opts)
         sorter = conf.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr, map)
             actions.select_default:replace(function()
-                local selection = action_state.get_selected_entry()
-                local selected = selection[1]
-
-                vim.fn.system({xettelkasten_core, "tag", "rm", "-z", title, "-r", selected})
+                local selection = action_state.get_selected_entry()[1]
+                vim.fn.system({xettelkasten_core, "tag", "rm", "-z", title, "-t", selection})
                 actions.close(prompt_bufnr)
             end)
             return true
