@@ -61,8 +61,8 @@ M.find = function(opts)
         attach_mappings = function(prompt_bufnr, map)
             actions.select_default:replace(function()
                 local selection = action_state.get_selected_entry()
-                open_zettel(selection[0])
                 actions.close(prompt_bufnr)
+                open_zettel(selection[1])
             end)
             return true
         end,
