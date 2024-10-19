@@ -1,13 +1,18 @@
-local xettelkasten_core = vim.g.xettelkasten_core or "/home/lentilus/git/xettelkasten-core/src/xettelkasten"
-
 local M = {}
 
-M.open_zettel = function(zettel)
-    local path=vim.fn.systemlist({xettelkasten_core, "path", "-z", zettel})[1]
-    print(path)
-    vim.cmd.edit(path .. "/zettel.tex")
+M.xk = function(...)
+	local cmd = table.concat({ ... }, " ")
+	return vim.fn.systemlist("xk " .. cmd .. " 2>/dev/null")
 end
 
-M.xettelkasten_core = xettelkasten_core
+M.xk_async = function(...)
+	vim.system({ "xk", ... })
+end
+
+M.open_zettel = function(zettel)
+	local path = M.xk("path", "-z", zettel)[1]
+	print(path)
+	vim.cmd.edit(path .. "/zettel.tex")
+end
 
 return M
