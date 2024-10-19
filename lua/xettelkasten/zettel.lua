@@ -60,12 +60,20 @@ end
 
 M.rm = function()
 	local filename = vim.fn.expand("%:p")
+	if filename == "" then
+		print("\nno file...")
+		return
+	end
 	local title = utils.xk("path", "-p", filename)[1]
-
+	if title == nil then
+		print("\nnot a zettel...")
+		return
+	end
 	local confirm = vim.fn.input("Are you sure you want to remove '" .. title .. "' [y/N]: ")
 	if confirm == "y" then
 		utils.xk("rm", "-z", title)
 		print("\nremoved " .. title)
+		vim.cmd.bdelete()
 	else
 		print("aborted")
 	end
