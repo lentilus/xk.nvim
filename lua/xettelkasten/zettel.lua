@@ -10,7 +10,7 @@ local M = {}
 
 M.insert = function()
 	local title = vim.fn.input("Title: ")
-	local zettel = utils.xk("insert", "-z", title)[1]
+	local zettel = utils.xk("insert", "-z", string.format('"%s"', title))[1]
 	utils.open_zettel(zettel)
 end
 
@@ -46,14 +46,14 @@ end
 
 M.mv = function()
 	local filename = vim.fn.expand("%:p")
-	local title = utils.xk("path", "-p", filename)[1]
+	local title = utils.xk("path", "-p", string.format('"%s"', filename))[1]
 	if title == nil then
 		print("buffer is not a zettel")
 		return
 	end
 
 	local new_title = vim.fn.input("new Title: ")
-	local new_zettel = utils.xk("mv", "-z", title, "-n", new_title)[1]
+	local new_zettel = utils.xk("mv", "-z", string.format('"%s"', title), "-n", string.format('"%s"', new_title))[1]
 	print(new_zettel)
 	utils.open_zettel(new_zettel)
 end
@@ -64,7 +64,7 @@ M.rm = function()
 		print("\nno file...")
 		return
 	end
-	local title = utils.xk("path", "-p", filename)[1]
+	local title = utils.xk("path", "-p", string.format('"%s"', filename))[1]
 	if title == nil then
 		print("\nnot a zettel...")
 		return

@@ -16,12 +16,11 @@ local function is_zettel()
 	return vim.b.iszettel
 end
 
--- working
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "*.tex",
 	callback = function(_)
 		if is_zettel() then
-			utils.xk_async("script", "genrefs", "-z", vim.b.zettelname)
+			utils.xk_async("script", "genrefs", "-z", string.format('"%s"', vim.b.zettelname))
 			utils.xk_async("script", "genbib")
 		end
 	end,
