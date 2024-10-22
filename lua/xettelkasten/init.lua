@@ -22,6 +22,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 		if is_zettel() then
 			utils.xk_async("script", "genrefs", "-z", string.format('"%s"', vim.b.zettelname))
 			utils.xk_async("script", "genbib")
+			utils.xk("script", "gencards", "-z", string.format('"%s"', vim.b.zettelname)) -- why not working async?
 		end
 	end,
 })
