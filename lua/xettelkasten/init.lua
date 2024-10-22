@@ -26,3 +26,16 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+	pattern = "*.tex",
+	callback = function(_)
+		if is_zettel() then
+			local fixes = utils.xk("script", "showfixes", "-z", string.format('"%s"', vim.b.zettelname)) -- why not working async?
+			if fixes and #fixes > 1 then
+				utils.show_in_split(fixes)
+				vim.inspect(fixes)
+			end
+		end
+	end,
+})
