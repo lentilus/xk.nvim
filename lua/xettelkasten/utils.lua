@@ -10,6 +10,9 @@ M.xk_async = function(...)
 end
 
 M.open_zettel = function(zettel)
+	if zettel == nil or zettel == "" then
+		return
+	end
 	local path = M.xk("path", "-z", zettel)[1]
 	print(path)
 	vim.cmd.edit(path .. "/zettel.tex")
