@@ -1,4 +1,4 @@
-local xettelkasten_core = require("xettelkasten.utils").xettelkasten_core
+local utils = require("xettelkasten.utils")
 local M = {}
 
 M.publish = function()
@@ -7,13 +7,12 @@ M.publish = function()
 		print("aborted.")
 		return
 	end
-	print("publishing...")
-
-	local response = vim.fn.systemlist({ xettelkasten_core, "git", "publish" })
-
-	for _, line in pairs(response) do
+	local p_response = utils.xk("git", "publish")
+	for _, line in pairs(p_response) do
 		print(line)
 	end
+	print("Syncing Anki.")
+	utils.xk("script", "syncanki")
 end
 
 return M
